@@ -1,0 +1,6 @@
+25/10/26:
+Adam: création des fichiers du projet et creation des fonctions:
+- rectangle
+- fenetre
+
+(on doit ajouter des lampadaires, qui s'allument en fonction de s'il fait nuit où pas)
