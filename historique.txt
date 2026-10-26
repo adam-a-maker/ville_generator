@@ -2,5 +2,15 @@
 Adam: création des fichiers du projet et creation des fonctions:
 - rectangle
 - fenetre
+- triangle
+- draw_ground
+- test fonctions
 
 (on doit ajouter des lampadaires, qui s'allument en fonction de s'il fait nuit où pas)
+
+26/10/26:
+adam:
+ajout des fonctions:
+- seine
+- draw_waves
+- draw_wall
