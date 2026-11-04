@@ -1,10 +1,11 @@
+import math
 import turtle
 from random import *
 
-height=1000
-width=1000
+width = turtle.window_width()
+height = turtle.window_height()
 
-turtle.speed(0)
+turtle.speed(10000)
 
 # edit this line to control where window appears
 turtle.setup(width, height, startx=-1, starty=0)
@@ -97,29 +98,76 @@ def draw_wall(x, y, brick_x=20, brick_y=10, fill="brown", couleur="black"):
         turtle.right(90)
     turtle.goto(position)
 
+def route():
+    turtle.penup()
+    turtle.goto(-(width/2), -(height/2))
+    turtle.pendown()
+    rectangle(width, height/8, "gray", "black")
+    turtle.setheading(90) # haut
+    turtle.forward(height/16)
+    turtle.setheading(0) # droite
+    
+    # dessiner les lignes blanches de la route
+    while turtle.xcor() < (width/2):
+        turtle.pencolor("white")
+        turtle.width(height/50)
+        turtle.forward(width/10)
+        turtle.penup()
+        turtle.forward(width/20)
+        turtle.pendown()
+        
+    turtle.pencolor("black")
+    turtle.width(1)
+    turtle.penup()
+    turtle.goto(-(width/2), -(height/2))
+    turtle.pendown()
+    
 def draw_ground():
-    environement = [seine, herbe, ville, route, sable]
+    environement = ["seine", "herbe", "route"]
     environement_choisi = random.choice(environement)
-    if environement_choisi == seine:
+    if environement_choisi == "seine":
         seine()
-    elif environement_choisi == herbe:
+    elif environement_choisi == "herbe":
         herbe()
-    elif environement_choisi == ville:
-        ville()
-    elif environement_choisi == route:
+    elif environement_choisi == "route":
         route()
-    elif environement_choisi == sable:
-        sable()
                 
+def car(x, fill="red", couleur="black"):
+    angle = 45
+    y = x/4
+    turtle.pencolor(couleur)
+    turtle.fillcolor(fill)
+    turtle.begin_fill()
+    turtle.forward(x)
+    turtle.left(90)
+    turtle.forward(y*(4/5))
+    turtle.circle(y/5, 90)
+    turtle.forward(x/5)
+    turtle.right(angle)
+    turtle.forward((y/1.5) / math.sin(math.radians(angle)))
+    turtle.left(angle)
+    turtle.forward(x/3)
+    turtle.left(90)
+    turtle.forward((y/1.5))
+    turtle.right(90)
+    turtle.forward(x/4)
+    turtle.left(90)
+    turtle.forward(y)
+    turtle.end_fill()
+
+car(100, "red", "black")
+
 def test_fonction():
     seine()
+    #route()
     turtle.goto(0, 0)
     turtle.setheading(0) # droite
     rectangle(150, 100, "red")
     triangle(150, 100, "green")
-    fenetre(10, 10, light_blue)
-    draw_wall(200, 100, 20, 10, "brown", "black")
+    fenetre(100, 100, light_blue)
+    # draw_wall(200, 100, 20, 10, "brown", "black")
 
+# seine()
 test_fonction()
 
 # fin du code

@@ -14,3 +14,12 @@ ajout des fonctions:
 - seine
 - draw_waves
 - draw_wall
+
+04/11/26:
+adam:
+ajout des fonctions:
+    - ville
+et changement des fonctions:
+    - draw_ground
+et j'ai débuté la fonction:
+    - car (qui dessine une voiture)
