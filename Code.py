@@ -2,18 +2,28 @@ import math
 import turtle
 from random import *
 
-width = turtle.window_width()
-height = turtle.window_height()
+width = 1280
+height = 720
 
 turtle.speed(10000)
 
 # edit this line to control where window appears
-turtle.setup(width, height, startx=-1, starty=0)
+turtle.setup(1280, 720, startx=0, starty=0)
+turtle.tracer(0)
 
 # Variables globales
 light_blue = "#9CD6E9"
+sky_blue = "#87CEEB"
+night_sky = "#0E0E2E"
+
 
 # Fonctions
+def draw_sky():
+    if randint(0, 1) == 0:
+        turtle.bgcolor(night_sky)
+    else:
+        turtle.bgcolor(sky_blue)
+
 def rectangle(x, y, fill="white", couleur="black"):
     turtle.pencolor(couleur)
     turtle.fillcolor(fill)
@@ -69,6 +79,7 @@ def draw_waves(largeur=width, hauteur=height):
 def seine():
     turtle.penup()
     turtle.goto(-(width/2), -(height/2))
+    turtle.setheading(0) # droite
     turtle.pendown()
     draw_wall(width, height/8, 20, 10, "brown", "black")
     turtle.setheading(90) # haut
@@ -101,10 +112,11 @@ def draw_wall(x, y, brick_x=20, brick_y=10, fill="brown", couleur="black"):
 def route():
     turtle.penup()
     turtle.goto(-(width/2), -(height/2))
+    turtle.setheading(0) # droite
     turtle.pendown()
-    rectangle(width, height/8, "gray", "black")
+    rectangle(width, height/6, "gray", "black")
     turtle.setheading(90) # haut
-    turtle.forward(height/16)
+    turtle.forward(height/12)
     turtle.setheading(0) # droite
     
     # dessiner les lignes blanches de la route
@@ -115,6 +127,24 @@ def route():
         turtle.penup()
         turtle.forward(width/20)
         turtle.pendown()
+
+    nb_car = randint(0, 5)
+    if nb_car > 0:
+        turtle.penup()
+        turtle.goto(-(width/2), -(height/2))
+        turtle.setheading(0)
+        turtle.goto(turtle.xcor(), turtle.ycor() + height/24)
+        while nb_car > 0 and turtle.xcor() < (width/2):
+            distance = randint(100, 600)
+            size = randint(75, 100)
+            if distance > 100:
+                car(size, "red", "black", "right")
+            else:
+                car(size, "blue", "black", "left")
+            turtle.penup()
+            turtle.pendown()
+            nb_car -= 1
+            
         
     turtle.pencolor("black")
     turtle.width(1)
@@ -132,34 +162,103 @@ def draw_ground():
     elif environement_choisi == "route":
         route()
                 
-def car(x, fill="red", couleur="black"):
+def car(x, fill="red", couleur="black", orientation="right"):
     angle = 45
     y = x/4
-    turtle.pencolor(couleur)
-    turtle.fillcolor(fill)
-    turtle.begin_fill()
-    turtle.forward(x)
-    turtle.left(90)
-    turtle.forward(y*(4/5))
-    turtle.circle(y/5, 90)
-    turtle.forward(x/5)
-    turtle.right(angle)
-    turtle.forward((y/1.5) / math.sin(math.radians(angle)))
-    turtle.left(angle)
-    turtle.forward(x/3)
-    turtle.left(90)
-    turtle.forward((y/1.5))
-    turtle.right(90)
-    turtle.forward(x/4)
-    turtle.left(90)
-    turtle.forward(y)
-    turtle.end_fill()
+    if orientation == "right":
+        turtle.setheading(0) # droite
+        # dessiner le body de la voiture
+        turtle.pencolor(couleur)
+        turtle.fillcolor(fill)
+        turtle.begin_fill()
+        turtle.forward(x)
+        turtle.left(90)
+        turtle.forward(y*(4/5))
+        turtle.circle(y/5, 90)
+        turtle.forward(x/5)
+        
+        #pare brise
+        turtle.right(angle)
+        turtle.forward((y/1.5) / math.sin(math.radians(angle)))
+        turtle.left(angle)
+        turtle.forward(x/3)
+        turtle.left(90)
+        turtle.forward((y/1.5))
+        turtle.right(90)
+        
+        turtle.forward(x/4)
+        turtle.left(90)
+        turtle.forward(y)
+        turtle.left(90)
+        turtle.end_fill()
+        
+        # dessiner roue arrière
+        turtle.forward(x/10)
+        turtle.fillcolor("black")
+        turtle.begin_fill()
+        turtle.right(90)
+        turtle.circle(y/2, 360)
+        turtle.end_fill()
+        
+        # dessiner roue avant
+        turtle.left(90)
+        turtle.forward(x/2)
+        turtle.fillcolor("black")
+        turtle.begin_fill()
+        turtle.right(90)
+        turtle.circle(y/2, 360)
+        turtle.end_fill()
+    else:
+        turtle.setheading(180) # gauche
+        # dessiner le body de la voiture
+        turtle.pencolor(couleur)
+        turtle.fillcolor(fill)
+        turtle.begin_fill()
+        turtle.forward(x)
+        turtle.right(90)
+        turtle.forward(y*(4/5))
+        turtle.circle(-y/5, 90)
+        turtle.forward(x/5)
+        
+        #pare brise
+        turtle.left(angle)
+        turtle.forward((y/1.5) / math.sin(math.radians(angle)))
+        turtle.right(angle)
+        turtle.forward(x/3)
+        turtle.right(90)
+        turtle.forward((y/1.5))
+        turtle.left(90)
+        
+        turtle.forward(x/4)
+        turtle.right(90)
+        turtle.forward(y)
+        turtle.right(90)
+        turtle.end_fill()
+        
+        # dessiner roue arrière
+        turtle.forward(x/10)
+        turtle.fillcolor("black")
+        turtle.begin_fill()
+        turtle.right(90)
+        turtle.circle(y/2, 360)
+        turtle.end_fill()
+        
+        # dessiner roue avant
+        turtle.left(90)
+        turtle.forward(x/2)
+        turtle.fillcolor("black")
+        turtle.begin_fill()
+        turtle.right(90)
+        turtle.circle(y/2, 360)
+        turtle.end_fill()
+       
 
-car(100, "red", "black")
+car(75, "red", "black", "left")
 
 def test_fonction():
+    draw_sky()
     seine()
-    #route()
+    route()
     turtle.goto(0, 0)
     turtle.setheading(0) # droite
     rectangle(150, 100, "red")
@@ -167,9 +266,12 @@ def test_fonction():
     fenetre(100, 100, light_blue)
     # draw_wall(200, 100, 20, 10, "brown", "black")
 
+draw_sky()
 # seine()
-test_fonction()
+route()
+# test_fonction()
 
 # fin du code
 # permet à le fenètre de rester fermé
+turtle.update()
 turtle.done()

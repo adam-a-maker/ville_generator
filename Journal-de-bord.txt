@@ -22,4 +22,4 @@ ajout des fonctions:
 et changement des fonctions:
     - draw_ground
 et j'ai débuté la fonction:
-    - car (qui dessine une voiture)
+    - car (qui dessine une voiture) -> difficultées pour connaitre la longeur du pare-brise car inclinée
